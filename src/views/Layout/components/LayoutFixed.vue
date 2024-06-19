@@ -1,6 +1,6 @@
 <script setup>
 import { useScroll } from '@vueuse/core'
-import { useCategoryStore } from '@/stores/category';
+import { useCategoryStore } from '@/stores/category'
 // 利用插件vueuse来获取滚动距离
 const { y } = useScroll(window)
 // 将导航列表数据放入pinia统一管理
