@@ -5,3 +5,6 @@ export const getBannerAPI = () => httpInstance.get('/home/banner')
 
 // 获取新鲜好物数据
 export const getNewGoodsAPI = () => httpInstance.get('/home/new')
+
+// 获取人气推荐数据
+export const getHotAPI = () =>httpInstance.get('/home/hot')
