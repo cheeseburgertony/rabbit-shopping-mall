@@ -4,7 +4,8 @@ import request from '@/utils/http'
  * @param {*}
  * @return {*}
  */
-export const getBannerAPI = () => request.get('/home/banner')
+export const getBannerAPI = (distributionSite = '1') =>
+  request.get('/home/banner', { params: { distributionSite } })
 
 /**
  * @description: 获取新鲜好物数据
@@ -18,11 +19,11 @@ export const getNewGoodsAPI = () => request.get('/home/new')
  * @param {*}
  * @return {*}
  */
-export const getHotAPI = () =>request.get('/home/hot')
+export const getHotAPI = () => request.get('/home/hot')
 
 /**
  * @description: 获取产品列表数据
  * @param {*}
  * @return {*}
  */
-export const getGoodsAPI = () =>request.get('/home/goods')
+export const getGoodsAPI = () => request.get('/home/goods')
