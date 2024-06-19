@@ -10,6 +10,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      // 这里的@做实际的路径转换  @ -> src
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
