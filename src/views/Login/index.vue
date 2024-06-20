@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from 'vue'
-import { loginAPI } from '@/apis/user'
-import { ElMessage } from 'element-plus';
-import { useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
 // 定义表单数据
 const form = ref({
-  account: '',
-  password: '',
+  account: '13012345765',
+  password: '123456',
   agree: true
 })
 
@@ -34,16 +34,16 @@ const rules = {
 }
 
 // 表单统一校验 （预校验）
+const userStore = useUserStore()
 const formRef = ref()
 const router = useRouter()
 const doLogin = async () => {
   await formRef.value.validate()
   // 校验成功，请求登录
-  const res = await loginAPI(form.value)
+  userStore.getUserInfo(form.value)
   // 进行提示，跳转到首页  13012345765
   ElMessage.success('登录成功')
   router.replace('/')
-  console.log(res)
 }
 </script>
 
