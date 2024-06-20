@@ -1,6 +1,7 @@
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/user'
 import axios from 'axios'
-import { ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus'
+import router from '@/router'
 
 // 基地址
 const httpInstance = axios.create({
@@ -32,6 +33,14 @@ httpInstance.interceptors.response.use(function (response) {
   // 超出 2xx 范围的状态码都会触发该函数。
   // 对响应错误进行提示
   ElMessage.warning(error.response.data.message)
+  // 处理401错误
+  if(error.response.status === 401){
+    const userStore = useUserStore()
+    // 清除用户数据
+    userStore.clearUserInfo()
+    // 跳转到登录页
+    router.push('/login')
+  }
   return Promise.reject(error);
 });
 
