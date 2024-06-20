@@ -2,14 +2,21 @@
 import { useMouseInElement } from '@vueuse/core';
 import { ref, watch } from 'vue';
 
-// 图片列表
-const imageList = [
-  "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
-  "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
-  "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
-  "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
-  "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg"
-]
+defineProps({
+  imageList:{
+    type: Array,
+    default: () => []
+  }
+})
+
+// // 图片列表
+// const imageList = [
+//   "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
+//   "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
+//   "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
+//   "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
+//   "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg"
+// ]
 
 // 创建一个属性来存储当前选择的图片数组的下标，通过这个下标让左侧大图显示相对应的图片
 // 并且通过当前图片下标和激活的下标进行判断来让选择的图片高亮
@@ -55,7 +62,6 @@ watch([elementX, elementY, isOutside], () => {
 
 
 <template>
-  {{ elementX }},{{ elementY }},{{ isOutside }}
   <div class="goods-image">
     <!-- 左侧大图-->
     <div class="middle" ref="target">
