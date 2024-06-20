@@ -18,7 +18,13 @@ const router = createRouter({
       ]
     },
     { path: '/login', component: Login }
-  ]
+  ],
+  // 路由滚动行为定制  (这里改为每次切换路由时都直接显示顶部，而不是在原来浏览的位置)
+  scrollBehavior() {
+    return {
+      top: 0
+    }
+  }
 })
 
 export default router
