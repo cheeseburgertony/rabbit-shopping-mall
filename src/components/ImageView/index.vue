@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue';
+import { useMouseInElement } from '@vueuse/core';
+import { ref, watch } from 'vue';
 
 // 图片列表
 const imageList = [
@@ -12,20 +13,45 @@ const imageList = [
 
 // 创建一个属性来存储当前选择的图片数组的下标，通过这个下标让左侧大图显示相对应的图片
 // 并且通过当前图片下标和激活的下标进行判断来让选择的图片高亮
+// 1.点击小图显示大图
 const activeIndex = ref(0)
 const enterHandle = (i) => {
   activeIndex.value = i
 }
+
+// 2.放大镜移动模块
+const target = ref()
+// 获取鼠标的相对位置
+const { elementX, elementY, isOutside } = useMouseInElement(target)
+
+// 监视位置变化，根据位置来确定滑块的移动
+const left = ref(0)
+const top = ref(0)
+watch([elementX, elementY], () => {
+  // 有效范围内控制滑块
+  if(elementX.value > 100 && elementX.value < 300){
+    left.value = elementX.value - 100
+  }
+  if(elementY.value > 100 && elementY.value < 300){
+    top.value = elementY.value - 100
+  }
+  // 超出边界了不再移动
+  if(elementX.value < 100) left.value = 0
+  if(elementX.value > 300) left.value = 200
+  if(elementY.value < 100) top.value = 0
+  if(elementY.value > 300) top.value = 200
+})
 </script>
 
 
 <template>
+  {{ elementX }},{{ elementY }},{{ isOutside }}
   <div class="goods-image">
     <!-- 左侧大图-->
     <div class="middle" ref="target">
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `0px`, top: `0px` }"></div>
+      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
