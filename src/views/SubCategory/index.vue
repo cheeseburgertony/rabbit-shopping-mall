@@ -36,6 +36,18 @@ const tabChange = () => {
   getGoodList()
 }
 
+// 无限加载
+const disabled = ref(false)
+const load = async () => {
+  // 每次到底部就让page+1获取新的数据，然后进行拼接
+  reqData.value.page++
+  const res = await getSubCategoryAPI(reqData.value)
+  // 这里使用展开运算符进行拼接
+  goodsList.value = [...goodsList.value, ...res.result.items]
+  // 如果后端没有数据了则关闭无限加载功能 加载完毕 停止监听
+  if(res.result.items.length === 0) disabled.value = true
+}
+
 </script>
 
 <template>
@@ -55,7 +67,7 @@ const tabChange = () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
         <!-- 商品列表-->
          <GoodsItem v-for="good in goodsList" :key="good.id" :good="good"></GoodsItem>
       </div>
