@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ElMessage } from 'element-plus';
 
 // 基地址
 const httpInstance = axios.create({
@@ -22,7 +23,8 @@ httpInstance.interceptors.response.use(function (response) {
   return response.data;
 }, function (error) {
   // 超出 2xx 范围的状态码都会触发该函数。
-  // 对响应错误做点什么
+  // 对响应错误进行提示
+  ElMessage.warning(error.response.data.message)
   return Promise.reject(error);
 });
 
