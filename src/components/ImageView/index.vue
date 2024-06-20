@@ -23,17 +23,26 @@ const enterHandle = (i) => {
 const target = ref()
 // 获取鼠标的相对位置
 const { elementX, elementY, isOutside } = useMouseInElement(target)
+// 3.放大镜大图显示
+// 定义大图的偏移位置
+const positionX = ref(0)
+const positionY = ref(0)
 
 // 监视位置变化，根据位置来确定滑块的移动
 const left = ref(0)
 const top = ref(0)
-watch([elementX, elementY], () => {
+watch([elementX, elementY, isOutside], () => {
+  // 如果在盒子外面就不执行下面的业务，进行优化
+  if(isOutside.value) return
   // 有效范围内控制滑块
   if(elementX.value > 100 && elementX.value < 300){
     left.value = elementX.value - 100
+    // 大图是原本中图的两倍，并且显示的方向和滑块移动的方向相反 
+    positionX.value = -left.value * 2
   }
   if(elementY.value > 100 && elementY.value < 300){
     top.value = elementY.value - 100
+    positionY.value = -top.value * 2
   }
   // 超出边界了不再移动
   if(elementX.value < 100) left.value = 0
@@ -41,6 +50,7 @@ watch([elementX, elementY], () => {
   if(elementY.value < 100) top.value = 0
   if(elementY.value > 300) top.value = 200
 })
+
 </script>
 
 
@@ -51,7 +61,7 @@ watch([elementX, elementY], () => {
     <div class="middle" ref="target">
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
+      <div class="layer" v-show="!isOutside" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
@@ -62,11 +72,11 @@ watch([elementX, elementY], () => {
     <!-- 放大镜大图 -->
     <div class="large" :style="[
       {
-        backgroundImage: `url(${imageList[0]})`,
-        backgroundPositionX: `0px`,
-        backgroundPositionY: `0px`,
+        backgroundImage: `url(${imageList[activeIndex]})`,
+        backgroundPositionX: `${positionX}px`,
+        backgroundPositionY: `${positionY}px`,
       },
-    ]" v-show="false"></div>
+    ]" v-show="!isOutside"></div>
   </div>
 </template>
 
