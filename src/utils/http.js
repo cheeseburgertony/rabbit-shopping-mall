@@ -1,3 +1,4 @@
+import { useUserStore } from '@/stores/user';
 import axios from 'axios'
 import { ElMessage } from 'element-plus';
 
@@ -9,7 +10,13 @@ const httpInstance = axios.create({
 
 // 添加请求拦截器
 httpInstance.interceptors.request.use(function (config) {
-  // 在发送请求之前做些什么
+  // 1.从pinia中获取token
+  const userStore = useUserStore()
+  const token = userStore.userInfo.token
+  // 2.根据后端要求在请求拦截器中拼接token
+  if(token){
+    config.headers.Authorization = `Bearer ${token}`
+  }
   return config;
 }, function (error) {
   // 对请求错误做些什么
