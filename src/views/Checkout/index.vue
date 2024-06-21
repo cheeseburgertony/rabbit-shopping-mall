@@ -55,7 +55,9 @@ const createOrder = async () => {
   // 进行路由跳转
   router.push({
     path: '/pay',
-    query: orderId
+    query: {
+      id: orderId
+    }
   })
   // 更新购物车列表
   cartStore.updateNewCartList()
