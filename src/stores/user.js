@@ -3,6 +3,7 @@ import { loginAPI } from "@/apis/user"
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import { useCartStore } from "./cart"
+import { mergeCartAPI } from "@/apis/cart"
 
 export const useUserStore = defineStore('user', () => {
   const cartStore = useCartStore()
@@ -12,19 +13,29 @@ export const useUserStore = defineStore('user', () => {
   const getUserInfo = async ({ account, password }) => {
     const res = await loginAPI({ account, password })
     userInfo.value = res.result
+    // 登录时合并购物车  请求里面传的数组包对象
+    await mergeCartAPI(cartStore.cartList.map(item => {
+      return {
+        skuId: item.skuId,
+        selected: item.selected,
+        count: item.count
+      }
+    }))
+    // 重新获取购物车数据
+    cartStore.updateNewCartList()
   }
   // 清除用户数据
-  const clearUserInfo = () =>{
+  const clearUserInfo = () => {
     userInfo.value = {}
     // 清空购物车数据
     cartStore.clearCart()
   }
   // 3.以对象的格式将state和action return出去
-  return{
+  return {
     userInfo,
     getUserInfo,
     clearUserInfo
   }
-},{
+}, {
   persist: true
 })

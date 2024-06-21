@@ -4,12 +4,12 @@ import { useCartStore } from '@/stores/cart'
 const cartStore = useCartStore()
 
 // 单选框功能
-const checkSingle = (select, i) => {
-  cartStore.checkSingle(i.skuId, select)
+const checkSingle = (selected, i) => {
+  cartStore.checkSingle(i.skuId, selected)
 } 
 // 全选功能
-const checkAll = (select) => {
-  cartStore.checkAll(select)
+const checkAll = (selected) => {
+  cartStore.checkAll(selected)
 }
 </script>
 
@@ -34,7 +34,7 @@ const checkAll = (select) => {
           <tbody>
             <tr v-for="i in cartStore.cartList" :key="i.id">
               <td>
-                <el-checkbox :model-value="i.select" @change="(select) => checkSingle(select, i)" />
+                <el-checkbox :model-value="i.selected" @change="(selected) => checkSingle(selected, i)" />
               </td>
               <td>
                 <div class="goods">

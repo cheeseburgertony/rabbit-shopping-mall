@@ -20,7 +20,7 @@ export const useCartStore = defineStore('cart', () => {
   // 购物车总价
   const totalPrice = computed(() => cartList.value.reduce((prev, current) => prev + current.count * current.price, 0))
   // 是否全选
-  const isAll = computed(() => cartList.value.every(item => item.select))
+  const isAll = computed(() => cartList.value.every(item => item.selected))
   // 选中商品数量
   const selectCount = computed(() => cartList.value.filter(item => item.select).reduce((prev, current) => prev + current.count, 0))
   // 选中商品总价
@@ -65,14 +65,14 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   // 单选框功能
-  const checkSingle = (skuId, select) => {
+  const checkSingle = (skuId, selected) => {
     const item = cartList.value.find(item => item.skuId === skuId)
-    item.select = select
+    item.selected = selected
   }
 
   // 全选功能
-  const checkAll = (select) => {
-    cartList.value.forEach(item => item.select = select)
+  const checkAll = (selected) => {
+    cartList.value.forEach(item => item.selected = selected)
   }
 
   return {
@@ -86,7 +86,8 @@ export const useCartStore = defineStore('cart', () => {
     delCart,
     checkSingle,
     checkAll,
-    clearCart
+    clearCart,
+    updateNewCartList
   }
 }, {
   persist: true

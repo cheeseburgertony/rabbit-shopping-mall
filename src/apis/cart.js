@@ -7,3 +7,6 @@ export const getCartListAPI = () => request.get('/member/cart')
 
 // 删除购物车商品
 export const delCartAPI = (ids) => request.delete('/member/cart', { data: { ids } })
+
+// 合并购物车
+export const mergeCartAPI = (data) => request.post('/member/cart/merge', data)

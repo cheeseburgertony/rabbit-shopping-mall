@@ -42,7 +42,7 @@ const addCart = () => {
       count: count.value,
       skuId: skuObj.value.skuId,
       attrsText: skuObj.value.specsText,
-      select: true
+      selected: true
     })
   } else {
     // 没有则进行提示
