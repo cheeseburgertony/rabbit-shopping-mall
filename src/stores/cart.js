@@ -11,6 +11,10 @@ export const useCartStore = defineStore('cart', () => {
   const totalPrice = computed(() => cartList.value.reduce((prev, current) => prev + current.count * current.price, 0))
   // 是否全选
   const isAll = computed(() => cartList.value.every(item => item.select))
+  // 选中商品数量
+  const selectCount = computed(() => cartList.value.filter(item => item.select).reduce((prev, current) => prev + current.count, 0))
+  // 选中商品总价
+  const selectPrice = computed(() => cartList.value.filter(item => item.select).reduce((prev, current) => prev + current.count * current.price, 0))
 
   // 加入购物车
   const addCart = (goods) => {
@@ -49,6 +53,8 @@ export const useCartStore = defineStore('cart', () => {
     totalCount,
     totalPrice,
     isAll,
+    selectCount,
+    selectPrice,
     addCart,
     delCart,
     checkSingle,
