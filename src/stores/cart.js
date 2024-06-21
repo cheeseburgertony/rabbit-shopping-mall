@@ -22,9 +22,9 @@ export const useCartStore = defineStore('cart', () => {
   // 是否全选
   const isAll = computed(() => cartList.value.every(item => item.selected))
   // 选中商品数量
-  const selectCount = computed(() => cartList.value.filter(item => item.select).reduce((prev, current) => prev + current.count, 0))
+  const selectCount = computed(() => cartList.value.filter(item => item.selected).reduce((prev, current) => prev + current.count, 0))
   // 选中商品总价
-  const selectPrice = computed(() => cartList.value.filter(item => item.select).reduce((prev, current) => prev + current.count * current.price, 0))
+  const selectPrice = computed(() => cartList.value.filter(item => item.selected).reduce((prev, current) => prev + current.count * current.price, 0))
 
   // 加入购物车
   const addCart = async (goods) => {
