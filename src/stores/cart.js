@@ -31,12 +31,19 @@ export const useCartStore = defineStore('cart', () => {
     cartList.value = cartList.value.filter(item => item.skuId !== skuId)
   }
 
+  // 单选框功能
+  const checkSingle = (skuId, select) => {
+    const item = cartList.value.find(item => item.skuId === skuId)
+    item.select = select
+  }
+
   return {
     cartList,
     totalCount,
     totalPrice,
     addCart,
-    delCart
+    delCart,
+    checkSingle
   }
 }, {
   persist: true
