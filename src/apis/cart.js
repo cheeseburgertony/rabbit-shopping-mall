@@ -4,3 +4,6 @@ export const insertCartAPI = ({ skuId, count }) => request.post('/member/cart', 
 
 // 获取购物车列表
 export const getCartListAPI = () => request.get('/member/cart')
+
+// 删除购物车商品
+export const delCartAPI = (ids) => request.delete('/member/cart', { data: { ids } })
