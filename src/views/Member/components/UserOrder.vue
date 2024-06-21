@@ -20,19 +20,28 @@ const params = ref({
   pageSize: 2
 })
 const getOrderList = async () => {
-  const res = await getOrderAPI(params)
+  const res = await getOrderAPI(params.value)
   orderList.value = res.value.item
 }
 
 onMounted(() => getOrderList())
 
+// tab栏切换
+const tabChange = (type) => {
+  console.log(type);
+  // 更新tab状态数据
+  params.value.orderState = type
+  // 重新发送
+  getOrderList()
+}
+
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs @tab-change="tabChange">
       <!-- tab切换 -->
-      <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
+      <el-tab-pane  v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
       <div class="main-container">
         <div class="holder-container" v-if="orderList.length === 0">
