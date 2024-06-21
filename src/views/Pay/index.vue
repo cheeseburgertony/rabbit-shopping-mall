@@ -16,7 +16,8 @@ onMounted(() => getPayInfo())
 // 跳转支付
 // 携带订单id和回跳地址跳到支付地址（get）
 // 支付地址
-// 账号 askgxl8276@sandbox.com 密码 111111
+// 账号 askgxl8276@sandbox.com   密码：111111
+// http://localhost:5173/paycallback?payResult=true&orderId=111
 const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
 const backURL = 'http://localhost:5173/paycallback'
 const redirectUrl = encodeURIComponent(backURL)
