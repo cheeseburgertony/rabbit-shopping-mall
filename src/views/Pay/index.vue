@@ -5,13 +5,22 @@ import { useRoute } from 'vue-router';
 const payInfo = ref({})
 const route = useRoute()
 
-// 获取订单的信息
+// 获取支付的信息
 const getPayInfo = async () => {
   const res = await getOrderAPI(route.query.id)
   payInfo.value = res.result
 }
 
 onMounted(() => getPayInfo())
+
+// 跳转支付
+// 携带订单id和回跳地址跳到支付地址（get）
+// 支付地址
+// 账号 askgxl8276@sandbox.com 密码 111111
+const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
+const backURL = 'http://localhost:5173/paycallback'
+const redirectUrl = encodeURIComponent(backURL)
+const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redirectUrl}`
 </script>
 
 
