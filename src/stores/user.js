@@ -13,7 +13,7 @@ export const useUserStore = defineStore('user', () => {
   const getUserInfo = async ({ account, password }) => {
     const res = await loginAPI({ account, password })
     userInfo.value = res.result
-    // 登录时合并购物车  请求里面传的数组包对象
+    // 登录时合并购物车  请求里面传的数组包对象  通过map进行映射，按模板将每一项的信息抽取出来最后形成一个数组包对象
     await mergeCartAPI(cartStore.cartList.map(item => {
       return {
         skuId: item.skuId,
