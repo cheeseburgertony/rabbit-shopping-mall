@@ -9,6 +9,8 @@ export const useCartStore = defineStore('cart', () => {
   const totalCount = computed(() => cartList.value.reduce((prev, current) => prev + current.count, 0))
   // 购物车总价
   const totalPrice = computed(() => cartList.value.reduce((prev, current) => prev + current.count * current.price, 0))
+  // 是否全选
+  const isAll = computed(() => cartList.value.every(item => item.select))
 
   // 加入购物车
   const addCart = (goods) => {
@@ -37,13 +39,20 @@ export const useCartStore = defineStore('cart', () => {
     item.select = select
   }
 
+  // 全选功能
+  const checkAll = (select) => {
+    cartList.value.forEach(item => item.select = select)
+  }
+
   return {
     cartList,
     totalCount,
     totalPrice,
+    isAll,
     addCart,
     delCart,
-    checkSingle
+    checkSingle,
+    checkAll
   }
 }, {
   persist: true
