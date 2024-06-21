@@ -59,6 +59,11 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
+  // 清除购物车数据
+  const clearCart = () => {
+    cartList.value = []
+  }
+
   // 单选框功能
   const checkSingle = (skuId, select) => {
     const item = cartList.value.find(item => item.skuId === skuId)
@@ -80,7 +85,8 @@ export const useCartStore = defineStore('cart', () => {
     addCart,
     delCart,
     checkSingle,
-    checkAll
+    checkAll,
+    clearCart
   }
 }, {
   persist: true
