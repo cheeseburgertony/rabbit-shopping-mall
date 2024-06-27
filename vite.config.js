@@ -11,6 +11,8 @@ import ElementPlus from 'unplugin-element-plus/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './', // 这里更改打包相对绝对路径
+  minify: true, // 是否压缩代码
   plugins: [
     vue(),
     AutoImport({
